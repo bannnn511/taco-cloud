@@ -1,0 +1,32 @@
+version: '3.x'
+services:
+  db:
+    container_name: postgres
+    image: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'mysecretpassword'
+      POSTGRES_DB: 'postgres'
+    networks:
+      - spring-postgres
+    ports:
+      - "5432:5432"
+  backend:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - spring-postgres
+    environment:
+      - URL=jdbc:postgresql://db:5432/postgres
+      - USER=postgres
+      - PASSWORD=mysecretpassword
+    depends_on:
+      - db
+volumes:
+  db-data:
+networks:
+  spring-postgres:
