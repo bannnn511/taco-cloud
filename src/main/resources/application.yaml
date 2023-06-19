@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: "org.postgresql.Driver"
+    ### Docker ###
+    #    url: ${URL}
+    #    username: ${USER}
+    #    password: ${PASSWORD}
+
+    ### Local ###
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: mysecretpassword
+  sql:
+    init:
+      schema-locations: classpath:/schema.sql
+      mode: always
+      data-locations: classpath:/data.sql
