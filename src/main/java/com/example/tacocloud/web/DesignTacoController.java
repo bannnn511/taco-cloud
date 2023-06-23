@@ -8,6 +8,7 @@ import java.util.stream.StreamSupport;
 import com.example.tacocloud.Taco;
 import com.example.tacocloud.TacoOrder;
 import com.example.tacocloud.data.IngredientRepository;
+import com.example.tacocloud.data.OrderRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 public class DesignTacoController {
     private final IngredientRepository ingredientRepo;
 
-    @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepository) {
+    private final OrderRepository orderRepo;
+
+    public DesignTacoController(
+            IngredientRepository ingredientRepository,
+            OrderRepository orderRepo
+    ) {
         this.ingredientRepo = ingredientRepository;
+        this.orderRepo = orderRepo;
     }
 
     @ModelAttribute
@@ -64,6 +70,7 @@ public class DesignTacoController {
             return "design";
         }
 
+        orderRepo.save(tacoOrder);
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
 

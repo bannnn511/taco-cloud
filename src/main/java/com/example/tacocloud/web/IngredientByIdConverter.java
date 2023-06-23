@@ -12,7 +12,6 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
 
     private IngredientRepository ingredientRepo;
 
-    @Autowired
     public IngredientByIdConverter(IngredientRepository ingredientRepo) {
         this.ingredientRepo = ingredientRepo;
     }

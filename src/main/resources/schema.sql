@@ -35,6 +35,18 @@ CREATE TABLE IF NOT EXISTS Taco_Ingredient
     taco       BIGINT     NOT NULL REFERENCES Taco (id)
 );
 
+CREATE TABLE IF NOT EXISTS "user"
+(
+    id           SERIAL PRIMARY KEY,
+    username     VARCHAR(50),
+    password     VARCHAR(100),
+    fullname     VARCHAR(50),
+    street       VARCHAR(50),
+    city         VARCHAR(50),
+    state        VARCHAR(2),
+    zip          VARCHAR(10),
+    phone_number VARCHAR(10)
+);
 
 
 DELETE
