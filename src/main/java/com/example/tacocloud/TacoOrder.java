@@ -18,7 +18,7 @@ public class TacoOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private Date placeAt;
+    private Date placedAt;
 
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;

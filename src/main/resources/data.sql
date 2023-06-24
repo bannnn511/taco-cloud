@@ -1,6 +1,4 @@
 DELETE
-from Taco_Ingredient;
-DELETE
 from Taco;
 DELETE
 from Taco_Order;

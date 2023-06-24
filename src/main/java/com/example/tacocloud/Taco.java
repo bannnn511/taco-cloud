@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.hypersistence.utils.hibernate.type.array.StringArrayType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Type;
 
 @Data
 @Entity
@@ -17,16 +20,31 @@ import lombok.NoArgsConstructor;
 public class Taco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
-    private Date createdAt;
+    @ColumnDefault("NOW()")
+    private Date createdAt = new Date();
 
     @NotNull
     @Size(min = 5, message = "Name must be at least 5 characters long")
     private String name;
 
-    @NotNull
-    @ManyToMany()
-    @Size(min = 1, message = "You must choose at lease 1 ingredient")
-    private List<Ingredient> ingredients = new ArrayList<>();
+
+    @Type(StringArrayType.class)
+    @Column(
+            name = "ingredient_ids",
+            columnDefinition = "text[]"
+    )
+    private String[] ingredientIds;
+
+    private String[] convertIngredientIds(List<Ingredient> ingredients) {
+        return ingredients
+                .stream()
+                .map((Ingredient::getId))
+                .toArray(String[]::new);
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredientIds = this.convertIngredientIds(ingredients);
+    }
 }
