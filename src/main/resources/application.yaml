@@ -15,3 +15,6 @@ spring:
       schema-locations: classpath:/schema.sql
       mode: always
       data-locations: classpath:/data.sql
+  data:
+    rest:
+      base-path: /data-api
